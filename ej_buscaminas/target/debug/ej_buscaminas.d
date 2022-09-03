@@ -1,0 +1,1 @@
+/home/carolina/Documentos/FIUBA/Taller\ de\ Programación\ I/ej_buscaminas/target/debug/ej_buscaminas: /home/carolina/Documentos/FIUBA/Taller\ de\ Programación\ I/ej_buscaminas/src/buscaminas.rs /home/carolina/Documentos/FIUBA/Taller\ de\ Programación\ I/ej_buscaminas/src/main.rs
