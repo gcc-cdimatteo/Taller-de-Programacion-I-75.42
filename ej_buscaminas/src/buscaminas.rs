@@ -1,3 +1,5 @@
+use std::str;
+
 pub fn main(data: &str) -> Vec<Vec<u8>> {
 
     let data_asbytes = data.as_bytes();
@@ -12,7 +14,19 @@ pub fn main(data: &str) -> Vec<Vec<u8>> {
 
     traducir_mapa(&tablero); // -> escrbir en archivo
 
+    for i in &tablero {
+        println!("t: {:?}", i);
+        
+        let s = match str::from_utf8(i) {
+            Ok(v) => v,
+            Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
+        };
+    
+        println!("result: {}", s);
+    };
+
     tablero
+
 }
 
 fn contar_filas_y_columnas(data: &[u8]) -> (usize, usize) {
@@ -138,6 +152,85 @@ mod tests {
     #[test]
     fn contar_matriz_2x2() {
         assert_eq!(contar_filas_y_columnas(&[1, 1, 10, 1, 1]), (2,2));
+    }
+
+    #[test]
+    fn contar_matriz_3x4() {
+        assert_eq!(contar_filas_y_columnas(&[1, 1, 1, 1, 10, 1, 1, 1, 1, 10, 1, 1, 1, 1]), (3,4));
+    }
+
+    #[test]
+    fn crear_mapa_2x2() {
+        assert_eq!(crear_mapa(&[1, 1, 10, 1, 1], 2, 2), [[1, 1], [1, 1]]);
+    }
+
+    #[test]
+    fn crear_mapa_3x4() {
+        assert_eq!(crear_mapa(&[1, 1, 1, 1, 10, 1, 1, 1, 1, 10, 1, 1, 1, 1], 3, 4), [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]);
+    }
+
+    #[test]
+    fn contar_bombas_1() {
+        let punto: u8 = 46;
+        let bomba: u8 = 42;
+        assert_eq!(contar_bombas(&vec![vec![punto, bomba], vec![punto, punto]], 2, 2), [[1, 0], [1, 1]]);
+    }
+
+    #[test]
+    fn contar_bombas_11() {
+        let punto: u8 = 46;
+        let bomba: u8 = 42;
+        assert_eq!(contar_bombas(
+            &vec![
+                vec![punto, punto, bomba, punto, bomba, bomba, punto, punto, punto], 
+                vec![bomba, punto, punto, punto, punto, bomba, punto, bomba, punto], 
+                vec![punto, punto, bomba, punto, punto, punto, punto, bomba, punto], 
+                vec![bomba, punto, punto, punto, punto, bomba, punto, punto, bomba]
+            ], 4, 9), 
+            [
+                [1, 2, 0, 2, 0, 0, 3, 1, 1], 
+                [0, 3, 2, 3, 3, 0, 4, 0, 2], 
+                [2, 3, 0, 1, 2, 2, 4, 0, 3], 
+                [0, 2, 1, 1, 1, 0, 2, 2, 0]
+            ]
+            );
+    }
+
+    #[test]
+    fn armar_tablero_1() {
+        let punto: u8 = 46;
+        let bomba: u8 = 42;
+        let mapa: Vec<Vec<u8>> = vec![vec![punto, bomba], vec![punto, punto]];
+        let bombas: Vec<Vec<u8>> = vec![vec![1, 0], vec![1, 1]];
+        assert_eq!(armar_tablero(&mapa, &bombas, 2, 2), [[1, 42], [1, 1]]);
+    }
+
+    #[test]
+    fn armar_tablero_11() {
+        let punto: u8 = 46;
+        let bomba: u8 = 42;
+        let mapa: Vec<Vec<u8>> = vec![
+            vec![punto, punto, bomba, punto, bomba, bomba, punto, punto, punto], 
+            vec![bomba, punto, punto, punto, punto, bomba, punto, bomba, punto], 
+            vec![punto, punto, bomba, punto, punto, punto, punto, bomba, punto], 
+            vec![bomba, punto, punto, punto, punto, bomba, punto, punto, bomba]
+        ];
+        let bombas: Vec<Vec<u8>> = vec![
+            vec![1, 2, 0, 2, 0, 0, 3, 1, 1], 
+            vec![0, 3, 2, 3, 3, 0, 4, 0, 2], 
+            vec![2, 3, 0, 1, 2, 2, 4, 0, 3], 
+            vec![0, 2, 1, 1, 1, 0, 2, 2, 0]
+        ];
+
+        assert_eq!(armar_tablero(&mapa, &bombas, 4, 9), 
+            vec![
+                vec![1, 2, 42, 2, 42, 42, 3, 1, 1], 
+                vec![42, 3, 2, 3, 3, 42, 4, 42, 2], 
+                vec![2, 3, 42, 1, 2, 2, 4, 42, 3], 
+                vec![42, 2, 1, 1, 1, 42, 2, 2, 42]
+            ]
+        );
+
     }
 
     // Integracion
