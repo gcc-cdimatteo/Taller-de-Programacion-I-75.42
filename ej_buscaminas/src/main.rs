@@ -12,7 +12,7 @@
 //! Ejemplo: cargo run mapa.txt
 //! 
 //! ##### Locación
-//! El código se encuentra disponible en el repositorio [Rust](https://doc.rust-lang.org/rust-by-example/index.html)
+//! El código se encuentra disponible [aquí](https://github.com/gcc-cdimatteo/taller_de_programacion_I/tree/master/ej_buscaminas).
 
 use std::env;
 
