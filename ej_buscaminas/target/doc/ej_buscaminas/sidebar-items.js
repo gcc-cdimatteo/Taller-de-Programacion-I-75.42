@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["main","Función Principal. Redirige todas las funcionalidades del sistema. Da la bienvenida al usuario y le informa la finalizazión del proceso. Lanza el procesamiento de traducción del mapa."]],"mod":[["buscaminas",""],["constantes",""],["file",""],["usr",""]]};

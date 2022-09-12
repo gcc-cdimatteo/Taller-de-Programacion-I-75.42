@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":[["entrada","Bienvenida al usuario."],["procesamiento","Evalúa la validez del path enviado por el usuario."],["salida","Saluda al usuario y le informa dónde se almacena la salida procesada."]]};
