@@ -402,17 +402,20 @@
 <span id="396">396</span>
 <span id="397">397</span>
 <span id="398">398</span>
+<span id="399">399</span>
+<span id="400">400</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::str</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constantes</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::file</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::file::ErrorArchivo</span>;
 
 <span class="doccomment">/// Función principal del procesamiento de traducción del mapa.</span>
 <span class="doccomment">/// Recibe la lectura del archivo enviado por el usuario en formato string.</span>
 <span class="doccomment">/// Construye y calcula las bombas adyacentes a todas las cuadrículas del mapa.</span>
 <span class="doccomment">/// Guarda en el archivo de salida en formato string el tablero con la información de las bombas adyacentes a todas las cuadrículas del mapa.</span>
 <span class="doccomment">/// Entrega un tablero en formato de vector de vectores de u8 con la información de las bombas adyacentes a todas las cuadrículas del mapa.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buscaminas</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buscaminas</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">ErrorArchivo</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">data_asbytes</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">as_bytes</span>();
 
     <span class="kw">let</span> (<span class="ident">cant_filas</span>, <span class="ident">cant_columnas</span>) <span class="op">=</span> <span class="ident">contar_filas_y_columnas</span>(<span class="ident">data_asbytes</span>);
@@ -423,9 +426,10 @@
 
     <span class="kw">let</span> <span class="ident">tablero</span> <span class="op">=</span> <span class="ident">armar_tablero</span>(<span class="kw-2">&amp;</span><span class="ident">mapa</span>, <span class="kw-2">&amp;</span><span class="ident">bombas</span>, <span class="ident">cant_filas</span>, <span class="ident">cant_columnas</span>);
 
-    <span class="ident">file::guardar</span>(<span class="kw-2">&amp;</span><span class="ident">tablero</span>);
-
-    <span class="ident">tablero</span>
+    <span class="kw">match</span> <span class="ident">file::guardar</span>(<span class="kw-2">&amp;</span><span class="ident">tablero</span>) {
+        <span class="prelude-val">Ok</span>(()) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">tablero</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+    }
 }
 
 <span class="doccomment">/// Cuenta la cantidad de filas y columnas de un arreglo de u8 que previamente se encontraba en formato string.</span>

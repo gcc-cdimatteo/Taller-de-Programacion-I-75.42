@@ -38,23 +38,83 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+<span id="55">55</span>
+<span id="56">56</span>
+<span id="57">57</span>
+<span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
+<span id="63">63</span>
+<span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::fs</span>;
 <span class="kw">use</span> <span class="ident">std::fs::File</span>;
 <span class="kw">use</span> <span class="ident">std::io::prelude</span>::<span class="kw-2">*</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constantes</span>;
 
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ErrorArchivo</span> {
+    <span class="ident">Lectura</span>(<span class="ident">String</span>),
+    <span class="ident">Escritura</span>(<span class="ident">String</span>),
+    <span class="ident">Creacion</span>(<span class="ident">String</span>),
+}
+
 <span class="doccomment">/// Lee el archivo del path recibido y lo convierte a string.</span>
 <span class="doccomment">/// Recibe el path donde se almacene el archivo a leer.</span>
 <span class="doccomment">/// Entrega la lectura en formato string del archivo.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">leer</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">String</span> {
-    <span class="ident">fs::read_to_string</span>(<span class="ident">path</span>).<span class="ident">expect</span>(<span class="string">&quot;[ERROR] Ingrese una ruta válida&quot;</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">leer</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ErrorArchivo</span><span class="op">&gt;</span> {
+    <span class="kw">match</span> <span class="ident">fs::read_to_string</span>(<span class="ident">path</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">data</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">data</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">_e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">ErrorArchivo::Lectura</span>(<span class="ident">String::from</span>(
+            <span class="string">&quot;No se puede leer el archivo de entrada.&quot;</span>,
+        ))),
+    }
 }
 
 <span class="doccomment">/// Guarda el tablero en formato de vector de vectores de u8 en el path definido en el móudlo de constantes llamado _PATH_SALIDA. Convierte a string cada uno de los elementos del tablero según las constantes definidas en el módulo de constantes.</span>
 <span class="doccomment">/// Recibe el tablero en formato de vector de vectores de u8.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">guardar</span>(<span class="ident">tablero</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File::create</span>(<span class="ident">constantes::_PATH_SALIDA</span>).<span class="ident">expect</span>(<span class="string">&quot;fallo&quot;</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">guardar</span>(<span class="ident">tablero</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorArchivo</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">crear</span>(<span class="ident">constantes::_PATH_SALIDA</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">_f</span>) =&gt; <span class="ident">_f</span>,
+        <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+    };
+
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">tablero</span> {
         <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="ident">i</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span>;
@@ -66,10 +126,38 @@
                 <span class="ident">s</span> <span class="op">=</span> <span class="ident">String::from</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">j</span>.<span class="ident">to_string</span>());
             }
             <span class="ident">s</span>.<span class="ident">push</span>(<span class="string">&#39; &#39;</span>);
-            <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>()).<span class="ident">expect</span>(<span class="string">&quot;fallo&quot;</span>);
+            <span class="kw">match</span> <span class="ident">escribir</span>(<span class="kw-2">&amp;mut</span> <span class="ident">f</span>, <span class="ident">s</span>) {
+                <span class="prelude-val">Ok</span>(()) =&gt; (),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+            };
         }
-        <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">String::from</span>(<span class="ident">constantes::_ENTER_STR</span>).<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;fallo&quot;</span>);
+        <span class="kw">match</span> <span class="ident">escribir</span>(<span class="kw-2">&amp;mut</span> <span class="ident">f</span>, <span class="ident">String::from</span>(<span class="ident">constantes::_ENTER_STR</span>)) {
+            <span class="prelude-val">Ok</span>(()) =&gt; (),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
+        };
+    }
+    <span class="prelude-val">Ok</span>(())
+}
+
+<span class="doccomment">/// Traduce a bytes el string que le envían y lo escribe sobre el archivo que recibe.</span>
+<span class="doccomment">/// Recibe el archivo a escribir y el string a traducir.</span>
+<span class="doccomment">/// Entrega error en caso de no poder escribir sobre el archivo.</span>
+<span class="kw">fn</span> <span class="ident">escribir</span>(<span class="ident">f</span>: <span class="kw-2">&amp;mut</span> <span class="ident">File</span>, <span class="ident">s</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ErrorArchivo</span><span class="op">&gt;</span> {
+    <span class="kw">match</span> <span class="ident">f</span>.<span class="ident">write_all</span>(<span class="ident">s</span>.<span class="ident">as_bytes</span>()) {
+        <span class="prelude-val">Ok</span>(()) =&gt; <span class="prelude-val">Ok</span>(()),
+        <span class="prelude-val">Err</span>(<span class="ident">_e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">ErrorArchivo::Escritura</span>(<span class="ident">String::from</span>(
+            <span class="string">&quot;No se puede escribir sobre el archivo de salida.&quot;</span>,
+        ))),
+    }
+}
+
+<span class="doccomment">/// Evalúa si se puede crear o no el archivo del path que recibe por parámetro.</span>
+<span class="kw">fn</span> <span class="ident">crear</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">File</span>, <span class="ident">ErrorArchivo</span><span class="op">&gt;</span> {
+    <span class="kw">match</span> <span class="ident">File::create</span>(<span class="ident">path</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">_f</span>) =&gt; <span class="prelude-val">Ok</span>(<span class="ident">_f</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">_e</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">ErrorArchivo::Creacion</span>(<span class="ident">String::from</span>(
+            <span class="string">&quot;No se puede crear el archivo de salida.&quot;</span>,
+        ))),
     }
 }
 </code></pre></div>
