@@ -1,13 +1,20 @@
 use std::env;
-use std::fs;
 
+mod usr;
+mod file;
 mod buscaminas;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+
     let path = &args[1];
 
-    let mapa = fs::read_to_string(path).expect("[ERROR] Ingrese una ruta válida");
+    usr::entrada();
+    
+    usr::procesamiento(path);
 
-    buscaminas::main(&mapa);
+    buscaminas::buscaminas(&file::_leer(path));
+
+    usr::salida();
+
 }
