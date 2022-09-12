@@ -27,7 +27,69 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
-</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std::env</span>;
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
+<span id="54">54</span>
+</pre><pre class="rust"><code><span class="doccomment">//! # Buscaminas</span>
+<span class="doccomment">//! ###### Carolina Di Matteo - cdimatteo@fi.uba.ar - 103963</span>
+<span class="doccomment">//! ______________</span>
+<span class="doccomment">//! ##### Introducción</span>
+<span class="doccomment">//! La presente entrega contiene las funcionalidades pedidas para</span>
+<span class="doccomment">//! el trabajo practico nº1 de la materia Taller de Programacion I - curso Deymonnaz.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ##### Objetivo</span>
+<span class="doccomment">//! El objetivo de este trabajo practico consta de simular la logica del juego</span>
+<span class="doccomment">//! [Buscaminas](https://es.wikipedia.org/wiki/Buscaminas)</span>
+<span class="doccomment">//! implementandolo en</span>
+<span class="doccomment">//! [Rust](https://doc.rust-lang.org/rust-by-example/index.html)</span>
+<span class="doccomment">//! siguiendo los conceptos trabajados en clase.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Para acceder al repositorio donde fue desarrollado el mismo</span>
+<span class="doccomment">//! se puede visitar el siguiente [enlace](https://github.com/valencorrea/Buscaminas).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ##### Ejecución</span>
+<span class="doccomment">//! Para comenzar a utilizar el programa se deberá hacer uso del comando *cargo run* seguido</span>
+<span class="doccomment">//! de la ruta en donde se encuentra el archivo de entrada.</span>
+<span class="doccomment">//! En particular, los archivos de entrada estan dentro de */main/src/mapas*, ruta en</span>
+<span class="doccomment">//! donde tambien se guardara el archivo de salida.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! *Ejemplo: cargo run mapas/mapa_input.txt*</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Otros comandos de interes:</span>
+<span class="doccomment">//! - *cargo test*</span>
+<span class="doccomment">//! - *cargo fmt*</span>
+<span class="doccomment">//! - *cargo clippy*</span>
+<span class="doccomment">//! - *cargo doc --open*</span>
+
+<span class="kw">use</span> <span class="ident">std::env</span>;
 
 <span class="kw">mod</span> <span class="ident">buscaminas</span>;
 <span class="kw">mod</span> <span class="ident">constantes</span>;

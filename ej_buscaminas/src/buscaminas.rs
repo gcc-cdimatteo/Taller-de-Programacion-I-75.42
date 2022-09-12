@@ -2,13 +2,14 @@ use std::str;
 
 use crate::constantes;
 use crate::file;
+use crate::file::ErrorArchivo;
 
 /// Función principal del procesamiento de traducción del mapa.
 /// Recibe la lectura del archivo enviado por el usuario en formato string.
 /// Construye y calcula las bombas adyacentes a todas las cuadrículas del mapa.
 /// Guarda en el archivo de salida en formato string el tablero con la información de las bombas adyacentes a todas las cuadrículas del mapa.
 /// Entrega un tablero en formato de vector de vectores de u8 con la información de las bombas adyacentes a todas las cuadrículas del mapa.
-pub fn buscaminas(data: &str) -> Vec<Vec<u8>> {
+pub fn buscaminas(data: &str) -> Result<Vec<Vec<u8>>, ErrorArchivo> {
     let data_asbytes = data.as_bytes();
 
     let (cant_filas, cant_columnas) = contar_filas_y_columnas(data_asbytes);
@@ -19,9 +20,10 @@ pub fn buscaminas(data: &str) -> Vec<Vec<u8>> {
 
     let tablero = armar_tablero(&mapa, &bombas, cant_filas, cant_columnas);
 
-    file::guardar(&tablero);
-
-    tablero
+    match file::guardar(&tablero) {
+        Ok(()) => Ok(tablero),
+        Err(e) => Err(e),
+    }
 }
 
 /// Cuenta la cantidad de filas y columnas de un arreglo de u8 que previamente se encontraba en formato string.
