@@ -3,14 +3,14 @@
 //! ______________
 //! ##### Introducción
 //! A continuación se desarrolla la resolución para los requerimientos detallados para el ejercicio individual del segundo cuatrimestre de 2022, Taller de Programación I curso Deymonnaz.
-//! 
+//!
 //! ##### Objetivo
 //! El objetivo de la actividad consiste en procesar el recuento de minas adyacentes a todas las cuadrículas existentes en un tablero de Buscaminas.
 //!
 //! ##### Ejecución
-//! Para comenzar la ejecución del programa, es necesario enviar como parámetro la ruta donde se encuentre el archivo del mapa. 
+//! Para comenzar la ejecución del programa, es necesario enviar como parámetro la ruta donde se encuentre el archivo del mapa.
 //! Ejemplo: cargo run mapa.txt
-//! 
+//!
 //! ##### Locación
 //! El código se encuentra disponible [aquí](https://github.com/gcc-cdimatteo/taller_de_programacion_I/tree/master/ej_buscaminas).
 
