@@ -2,11 +2,17 @@
 //! ###### Carolina Di Matteo - cdimatteo@fi.uba.ar - 103963
 //! ______________
 //! ##### Introducción
+//! A continuación se desarrolla la resolución para los requerimientos detallados para el ejercicio individual del segundo cuatrimestre de 2022, Taller de Programación I curso Deymonnaz.
 //! 
 //! ##### Objetivo
+//! El objetivo de la actividad consiste en procesar el recuento de minas adyacentes a todas las cuadrículas existentes en un tablero de Buscaminas.
 //!
 //! ##### Ejecución
+//! Para comenzar la ejecución del programa, es necesario enviar como parámetro la ruta donde se encuentre el archivo del mapa. 
+//! Ejemplo: cargo run mapa.txt
 //! 
+//! ##### Locación
+//! El código se encuentra disponible en el repositorio [Rust](https://doc.rust-lang.org/rust-by-example/index.html)
 
 use std::env;
 
