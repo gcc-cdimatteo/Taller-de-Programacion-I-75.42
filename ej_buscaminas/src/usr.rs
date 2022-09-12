@@ -15,7 +15,9 @@ pub(crate) fn procesamiento(path: &str) {
 }
 pub(crate) fn salida() {
     println!("Todo listo!");
-    println!("Puede revisar el mapa revelado en la ruta [/{}]", constantes::_PATH_SALIDA);
+    println!(
+        "Puede revisar el mapa revelado en la ruta [/{}]",
+        constantes::_PATH_SALIDA
+    );
     println!("Nos vemos! :)");
 }
-

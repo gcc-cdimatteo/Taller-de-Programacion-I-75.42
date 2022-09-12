@@ -1,8 +1,8 @@
 use std::env;
 
-mod usr;
-mod file;
 mod buscaminas;
+mod file;
+mod usr;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -10,11 +10,10 @@ fn main() {
     let path = &args[1];
 
     usr::entrada();
-    
+
     usr::procesamiento(path);
 
     buscaminas::buscaminas(&file::_leer(path));
 
     usr::salida();
-
 }

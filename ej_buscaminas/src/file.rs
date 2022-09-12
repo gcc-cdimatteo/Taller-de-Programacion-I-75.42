@@ -24,7 +24,7 @@ pub fn _guardar(tablero: &Vec<Vec<u8>>) {
             s.push_str(" ");
             file.write_all(s.as_bytes()).expect("fallo");
         }
-        file.write_all(String::from(constantes::_ENTER_STR).as_bytes()).expect("fallo");
+        file.write_all(String::from(constantes::_ENTER_STR).as_bytes())
+            .expect("fallo");
     }
-
 }
